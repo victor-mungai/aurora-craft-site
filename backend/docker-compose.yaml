@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "3123:3001"
+    restart: always
+    secrets:
+      - supabase_url
+      - supabase_key
+      - resend_key
+      - aws_api_url
+      - aws_api_key
+      - apify_key
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+
+secrets:
+  supabase_url:
+    external: true
+  supabase_key:
+    external: true
+  resend_key:
+    external: true
+  aws_api_url:
+    external: true
+  aws_api_key:
+    external: true
+  apify_key:
+    external: true
