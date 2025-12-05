@@ -32,7 +32,7 @@ app.use(helmet());
 
 // CORS configuration
 const allowedOrigins = NODE_ENV === 'production' 
-  ? [process.env.FRONTEND_URL || 'https://your-domain.com']
+  ? ['https://victormungai.dpdns.org', 'http://102.213.179.45']
   : ['http://localhost:8080', 'http://localhost:5173', 'http://127.0.0.1:8080', 'http://localhost:3000', 'http://localhost:5174'];
 
 app.use(cors({
