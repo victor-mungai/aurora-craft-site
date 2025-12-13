@@ -124,26 +124,8 @@ export const submitReview = async (reviewData: any) => {
   }
 };
 
-// Image proxy for CORS-restricted images
-export const proxyImageUrl = (url: string) => {
-  if (!url) return url;
-  
-  // Proxy LinkedIn images through backend to bypass CORS
-  if (url.includes('media.licdn.com')) {
-    return `${API_BASE_URL.replace(/\/$/, '')}/api/proxy/image?url=${encodeURIComponent(url)}`;
-  }
-  
-  return url;
-};
-
 // Image optimization
 export const optimizeImageUrl = (url: string, width?: number, height?: number) => {
   if (!url) return url;
-  
-  // For LinkedIn images, proxy first then add size parameters
-  if (url.includes('media.licdn.com')) {
-    return proxyImageUrl(url);
-  }
-  
   return url;
 };
