@@ -26,9 +26,7 @@ const ReviewsSection = () => {
   useEffect(() => {
     const loadReviews = async () => {
       try {
-        console.log('Loading reviews...');
         const data = await fetchReviews(1, 6);
-        console.log('Reviews loaded:', data);
         setReviews(data);
         setHasMore(data.length === 6);
       } catch (error) {

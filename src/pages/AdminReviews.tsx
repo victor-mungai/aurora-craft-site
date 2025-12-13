@@ -8,7 +8,6 @@ import LoginForm from '@/components/auth/LoginForm';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vic.dita.co.ke';
 const API_KEY = import.meta.env.VITE_BACKEND_API_KEY;
-console.log('Admin API_BASE_URL:', API_BASE_URL);
 
 const AdminReviews = () => {
   const { user, signOut, loading: authLoading } = useAuth();
@@ -32,24 +31,16 @@ const AdminReviews = () => {
   if (!user) {
     return <LoginForm />;
   }
-  
-  console.log('Current pendingReviews state:', pendingReviews);
-  console.log('Current loading state:', loading);
 
   const fetchPendingReviews = async () => {
     try {
       const url = `${API_BASE_URL.replace(/\/$/, '')}/api/reviews/pending`;
-      console.log('Fetching pending reviews from:', url);
       const response = await axios.get(url, {
         headers: {
           'x-api-key': API_KEY
         }
       });
-      console.log('Pending reviews response:', response.data);
-      console.log('Response type:', typeof response.data);
-      console.log('Is array:', Array.isArray(response.data));
       const reviews = response.data || [];
-      console.log('Setting pendingReviews to:', reviews);
       setPendingReviews(reviews);
     } catch (error) {
       console.error('Error fetching pending reviews:', error);
