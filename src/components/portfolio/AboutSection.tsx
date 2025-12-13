@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import profile from "/src/assets/profile.jpeg";
+
 const AboutSection = () => {
   return (
     <section id="about" className="py-24 px-6">
@@ -21,7 +21,7 @@ const AboutSection = () => {
               <div className="text-muted-foreground text-center">
                 {/* Replace the div below with your image */}
                 <img
-                src={profile}
+                src="/profile.jpeg"
                 alt="Profile"
                 className="w-60 h-60 rounded-full mx-auto mb-4 object-cover"
                 />

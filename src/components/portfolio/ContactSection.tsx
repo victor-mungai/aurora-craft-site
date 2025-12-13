@@ -21,6 +21,7 @@ const ContactSection = () => {
     setSubmitStatus('idle');
 
     try {
+      // Try AWS API first
       const { configService } = await import('@/services/config');
       const config = await configService.getConfig();
       
@@ -37,11 +38,32 @@ const ContactSection = () => {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
-        setSubmitStatus('error');
+        throw new Error('AWS API failed');
       }
     } catch (error) {
-      console.error('Error sending email:', error);
-      setSubmitStatus('error');
+      console.error('AWS API failed, trying backend fallback:', error);
+      
+      // Fallback to backend API
+      try {
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vic.dita.co.ke';
+        const response = await fetch(`${API_BASE_URL.replace(/\/$/, '')}/api/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          setSubmitStatus('success');
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        } else {
+          setSubmitStatus('error');
+        }
+      } catch (backendError) {
+        console.error('Backend API also failed:', backendError);
+        setSubmitStatus('error');
+      }
     } finally {
       setIsSubmitting(false);
     }

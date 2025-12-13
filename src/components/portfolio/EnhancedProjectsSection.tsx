@@ -5,10 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ExternalLink, Github, Star, Calendar } from "lucide-react";
 import { fetchGitHubRepos } from "@/services/api";
-import terraform from "/src/assets/terraform.jpg";
-import ansible from "/src/assets/Ansible.png";
-import cicd from "/src/assets/cicd.jpeg";
-import architecture from "/src/assets/architecture.jpeg";
 
 const EnhancedProjectsSection = () => {
   const { data: githubRepos, isLoading } = useQuery({
@@ -21,7 +17,7 @@ const EnhancedProjectsSection = () => {
     {
       title: "Terraform-AWS-Infrastructure-Project",
       description: "Infrastructure as Code project using Terraform to deploy a scalable web application on AWS with EC2, S3, RDS, and VPC.",
-      image: terraform,
+      image: null,
       tags: ["Terraform", "AWS", "Infrastructure as Code", "DevOps"],
       liveUrl: "#",
       githubUrl: "https://github.com/victor-mungai/Terraform-AWS-Infrastructure-Project",
@@ -30,7 +26,7 @@ const EnhancedProjectsSection = () => {
     {
       title: "Ansible-projects",
       description: "Automation of server configuration and application deployment using Ansible playbooks and roles for consistent environments.",
-      image: ansible,
+      image: null,
       tags: ["Ansible", "Automation", "Configuration Management"],
       liveUrl: "#",
       githubUrl: "https://github.com/victor-mungai/Ansible-projects",
@@ -39,7 +35,7 @@ const EnhancedProjectsSection = () => {
     {
       title: "Production-Ready CI/CD Pipeline Deployment",
       description: "End-to-end CI/CD pipeline setup using Jenkins, Docker, Sonarqube, Nexus and Slack for automated testing, building, and deployment.",
-      image: cicd,
+      image: null,
       tags: ["CI/CD", "Jenkins", "Docker", "Automation"],
       liveUrl: "#",
       githubUrl: "#",
@@ -48,7 +44,7 @@ const EnhancedProjectsSection = () => {
     {
       title: "Scalable AWS Backend Infrastructure",
       description: "Designed and implemented a scalable, secure backend infrastructure using several AWS services including EC2, S3, RDS, and VPC to support a high-traffic web application.",
-      image: architecture,
+      image: null,
       tags: ["AWS", "Cloud Architecture", "Security"],
       liveUrl: "#",
       githubUrl: "#",

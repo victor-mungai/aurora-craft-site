@@ -12,6 +12,7 @@ import postsRouter from './api/posts.js';
 import reviewsRouter from './api/reviews.js';
 import { sendContactEmail } from './api/contact.js';
 import { getConfig } from './api/config.js';
+import { proxyImage } from './api/proxy.js';
 import { getSecrets } from './utils/secrets.js';
 
 dotenv.config({ path: './.env' });
@@ -56,6 +57,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.post('/api/contact', sendContactEmail);
 app.get('/api/config', getConfig);
+app.get('/api/proxy/image', proxyImage);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Portfolio API is running' });

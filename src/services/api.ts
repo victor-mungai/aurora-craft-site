@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/';
-console.log('API_BASE_URL:', API_BASE_URL);
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vic.dita.co.ke/';
 const APIFY_TOKEN = import.meta.env.VITE_APIFY_API_KEY;
 
 // GitHub API
 export const fetchGitHubRepos = async (username: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/github/repos/${username}`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/github/repos/${username}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching GitHub repos:', error);
@@ -17,7 +16,7 @@ export const fetchGitHubRepos = async (username: string) => {
 
 export const fetchGitHubProfile = async (username: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/github/profile/${username}`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/github/profile/${username}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching GitHub profile:', error);
@@ -28,7 +27,7 @@ export const fetchGitHubProfile = async (username: string) => {
 // Medium API
 export const fetchMediumPosts = async (username: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/medium/posts/${username}`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/medium/posts/${username}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching Medium posts:', error);
@@ -39,13 +38,11 @@ export const fetchMediumPosts = async (username: string) => {
 // LinkedIn API
 export const fetchLinkedInProfile = async () => {
   try {
-    const url = `${API_BASE_URL}api/linkedin/profile`;
-    console.log('Calling LinkedIn profile:', url);
+    const url = `${API_BASE_URL.replace(/\/$/, '')}/api/linkedin/profile`;
     const response = await axios.get(url);
-    console.log('LinkedIn profile response:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching LinkedIn profile:', error);
+    if (import.meta.env.DEV) console.error('Error fetching LinkedIn profile:', error);
     return null;
   }
 };
@@ -53,7 +50,7 @@ export const fetchLinkedInProfile = async () => {
 // Projects API
 export const fetchProjects = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/projects`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/projects`);
     return response.data;
   } catch (error) {
     console.error('Error fetching projects:', error);
@@ -64,7 +61,7 @@ export const fetchProjects = async () => {
 // Stats API
 export const fetchStats = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/stats`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/stats`);
     return response.data;
   } catch (error) {
     console.error('Error fetching stats:', error);
@@ -75,7 +72,7 @@ export const fetchStats = async () => {
 // Skills API
 export const fetchSkills = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/skills`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/skills`);
     return response.data;
   } catch (error) {
     console.error('Error fetching skills:', error);
@@ -86,7 +83,7 @@ export const fetchSkills = async () => {
 // Posts API
 export const fetchLinkedInPosts = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/posts/linkedin`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/posts/linkedin`);
     return response.data;
   } catch (error) {
     console.error('Error fetching LinkedIn posts:', error);
@@ -102,7 +99,7 @@ export const getS3CVUrl = (bucketName: string, key: string) => {
 // Reviews API
 export const fetchReviews = async (page = 1, limit = 6) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}api/reviews?page=${page}&limit=${limit}`);
+    const response = await axios.get(`${API_BASE_URL.replace(/\/$/, '')}/api/reviews?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching reviews:', error);
@@ -127,17 +124,25 @@ export const submitReview = async (reviewData: any) => {
   }
 };
 
+// Image proxy for CORS-restricted images
+export const proxyImageUrl = (url: string) => {
+  if (!url) return url;
+  
+  // Proxy LinkedIn images through backend to bypass CORS
+  if (url.includes('media.licdn.com')) {
+    return `${API_BASE_URL.replace(/\/$/, '')}/api/proxy/image?url=${encodeURIComponent(url)}`;
+  }
+  
+  return url;
+};
+
 // Image optimization
 export const optimizeImageUrl = (url: string, width?: number, height?: number) => {
   if (!url) return url;
   
-  // For LinkedIn images, add size parameters
+  // For LinkedIn images, proxy first then add size parameters
   if (url.includes('media.licdn.com')) {
-    const separator = url.includes('?') ? '&' : '?';
-    const params = [];
-    if (width) params.push(`w=${width}`);
-    if (height) params.push(`h=${height}`);
-    return params.length > 0 ? `${url}${separator}${params.join('&')}` : url;
+    return proxyImageUrl(url);
   }
   
   return url;

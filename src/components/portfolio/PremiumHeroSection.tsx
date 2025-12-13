@@ -47,7 +47,7 @@ const PremiumHeroSection = () => {
           >
             <div className="w-full h-full rounded-full glass p-1">
               <img
-                src="/src/assets/profile.jpeg"
+                src="/profile.jpeg"
                 alt="Victor Mungai"
                 className="w-full h-full rounded-full object-cover"
               />
@@ -91,7 +91,7 @@ const PremiumHeroSection = () => {
               View Projects
             </a>
             <a 
-              href="https://vpc-s3-1.s3.us-east-1.amazonaws.com/victor-mungai-DevOps-resume.docx" 
+              href={`https://vpc-s3-1.s3.us-east-1.amazonaws.com/victor-mungai-DevOps-resume.docx?v=${Date.now()}`}
               download="Victor-Mungai-DevOps-Resume.docx"
               className="inline-flex items-center gap-2 px-8 py-4 glass bg-white/10 hover:bg-white/20 text-white rounded-2xl transition-all duration-300 border-0 font-medium"
             >

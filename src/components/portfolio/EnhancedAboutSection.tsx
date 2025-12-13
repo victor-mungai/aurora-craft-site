@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card } from "@/components/ui/card";
 import { fetchLinkedInProfile } from "@/services/api";
-import profile from "/src/assets/profile.jpeg";
+
 
 const EnhancedAboutSection = () => {
   const { data: linkedinProfile } = useQuery({
@@ -29,7 +29,7 @@ const EnhancedAboutSection = () => {
               <div className="w-80 h-80 bg-card rounded-2xl shadow-lg card-glow flex items-center justify-center">
               <div className="text-muted-foreground text-center">
                 <img
-                src={linkedinProfile?.profilePicHighQuality || linkedinProfile?.profilePic || profile}
+                src={linkedinProfile?.profilePicHighQuality || linkedinProfile?.profilePic || "/profile.jpeg"}
                 alt={linkedinProfile?.fullName || "Profile"}
                 className="w-60 h-60 rounded-full mx-auto mb-4 object-cover"
                 />

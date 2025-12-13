@@ -35,7 +35,7 @@ const MediumSection = () => {
         ) : error || !posts?.length ? (
           <div className="text-center py-12">
             <img 
-              src="./medium.png" 
+              src="/medium.png" 
               alt="Medium Blog" 
               className="w-32 h-32 mx-auto mb-6 opacity-60"
             />

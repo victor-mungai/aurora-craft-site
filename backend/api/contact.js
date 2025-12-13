@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
+import { secrets } from '../utils/secrets.js';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_8ahz7iyY_2N9SP4W83rssY8NUeNdKqdjG');
+const resend = new Resend(secrets.RESEND_API_KEY);
 
 export const sendContactEmail = async (req, res) => {
   try {
